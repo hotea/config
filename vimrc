@@ -2,7 +2,7 @@
 " (瘦箭头)hotea's vimrc
 " myblog: http://my.oschina.net/sukai
 "
-" original link: http://amix.dk/vim/vimrc.html
+" 参考: http://amix.dk/vim/vimrc.html
 "
 
 "	-> 常规
