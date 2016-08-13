@@ -1,5 +1,5 @@
-"
-" (瘦箭头)hotea's vimrc
+""
+" hotea's vimrc
 " myblog: http://my.oschina.net/sukai
 "
 " 参考: http://amix.dk/vim/vimrc.html
@@ -17,7 +17,7 @@
 "	-> 搜索和显示
 "	-> 拼写检查
 "	-> 杂项
-"	-> 帮助功能
+"	-> 插件
 
 
 
@@ -26,9 +26,6 @@
 " 历史记录
 set history=500			
 
-" 激活文件类型插件
-filetype plugin on
-filetype indent on
 
 " 当文件改变时自动读取
 set autoread
@@ -40,29 +37,30 @@ let g:mapleader=","
 " 快速保存
 nmap <leader>w :w!<cr>
 
+" 折叠
+" set foldmethod=indent
 
 "	-> 界面
 """"""""""""""""""""""""""""""""""""""""""""""""""
 
 set number
 
-" set 7 lines to the cursor - when moving vertically using j/k
+" 光标上下两侧最少保留的屏幕行数
 set so=7
 
 " 打开通配菜单
 set wildmenu
-
 " 忽略的文件
 set wildignore=*.o,*~,*.pyc
 
 " 总是显示当前位置
-set ruler
+" set ruler
 
 " 增高命令栏
-set cmdheight=2
+" set cmdheight=1
 
-" a buffer becomes hidden when it is abandoned
-set hid
+" a buffer becomes hidden when it is abandoned, 保留修改了的缓冲区但不写回
+" set hid
 
 " 设置backspace
 set backspace=eol,start,indent
@@ -70,7 +68,6 @@ set whichwrap+=<,>,h,l
 
 " 搜索忽略大小写
 set ignorecase
-
 " 智能忽略
 set smartcase
 
@@ -105,8 +102,8 @@ set tm=500
 " 激活语法高亮
 syntax enable
 
-colorscheme desert
-set background=dark
+" colorscheme desert
+" set background=dark
 
 " 设置字符编码
 set encoding=utf8
@@ -200,9 +197,9 @@ map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
 " 指定缓冲区切换时的表现
 try
-        set switchbuf=useopen,usetab,newtab
-        set stal=2
-    catch
+    set switchbuf=useopen,usetab,newtab
+    set stal=2
+catch
     endtry
 
 " 关闭时记住缓冲区信息
@@ -216,15 +213,8 @@ set viminfo^=%
 " 总是显示状态栏
 set laststatus=2
 
-" 状态栏格式
-
-
-
-
 "	-> 映射
 """"""""""""""""""""""""""""""""""""""""""""""""""
-" 将0映射为^
-map 0 ^
 
 " 使用ALT+[jk]移动一行文本
 nmap <M-j> mz:m+<cr>`z
@@ -294,20 +284,144 @@ map <leader>q :e ~/buffer<cr>
 " 切换粘贴模式
 map <leader>pp :setlocal paste!<cr>
 
-" python 补全
+" Omni python 补全
 " If you prefer the Omni-Completion tip window to close when a selection is
 " " made, these lines close it on movement in insert mode or when leaving
 " " insert mode
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-"autocmd CompleteDone * pclose
-set completeopt-=preview
+autocmd CompleteDone * pclose
+"set completeopt-=preview
+
+" 运行py文件
+" au BufRead *.py map <buffer> <F5> :w<CR>:!/usr/bin/env python %<CR>
 
 " taglist
-let Tlist_Show_One_file=1
+" let Tlist_Show_One_file=1
 
 
 
-"	-> 帮助功能
+"   -> 插件
 """"""""""""""""""""""""""""""""""""""""""""""""""
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+Plugin 'git://git.wincent.com/command-t.git'
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Install L9 and avoid a Naming conflict if you've already installed a
+" different version somewhere else.
+Plugin 'ascenator/L9', {'name': 'newL9'}
+"Plugin 'vim-scripts/AutoClose'
+Plugin 'rkulla/pydiction'
+Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'kien/ctrlp.vim'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'nvie/vim-flake8'
+Plugin 'tmhedberg/SimpylFold'
+call vundle#end()
+filetype plugin on
+filetype indent on
+
+"pydiction 设置
+let g:pydiction_location = '~/.vim/bundle/Pydiction/complete-dict'
+let g:pydiction_menu_height = 3
+
+
+" airline 设置
+" let g:airline_section_b = '%{strftime("%c")}'
+" let g:airline_section_y = 'BN: %{bufnr("%")}'
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+set t_Co=256
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'ξ'
+
+" powerline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
+let g:airline_theme="dark"
+" smarter tab line
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+
+"nerdtree
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+map <C-n> :NERDTreeToggle<CR>
+
+"nerdtree-git-plugin
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
+
+"ctrlp
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 'ra'
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+"let g:ctrlp_custom_ignore = {
+  "\ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  "\ 'file': '\v\.(exe|so|dll|jpg|png|jpeg|pdf)$',
+  "\ 'link': 'some_bad_symbolic_links',
+  "\ }
+" let g:ctrlp_user_command = 'find %s -type f' 
+
+" ultisnips 设置
+"Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+" simpylfold"
+autocmd BufWinEnter *.py setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr
+autocmd BufWinLeave *.py setlocal foldexpr< foldmethod<
