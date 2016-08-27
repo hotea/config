@@ -275,6 +275,7 @@ map <leader>s? z=
 
 "	-> 杂项
 """"""""""""""""""""""""""""""""""""""""""""""""""
+set shell=sh
 " dos2unix
 noremap <leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
@@ -314,17 +315,12 @@ call vundle#begin()
 "call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
-Plugin 'bling/vim-airline'
+Plugin 'tpope/vim-sensible'
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
-Plugin 'git://git.wincent.com/command-t.git'
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Install L9 and avoid a Naming conflict if you've already installed a
-" different version somewhere else.
-Plugin 'ascenator/L9', {'name': 'newL9'}
-"Plugin 'vim-scripts/AutoClose'
 Plugin 'rkulla/pydiction'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
