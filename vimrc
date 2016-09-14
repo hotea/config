@@ -39,6 +39,7 @@ nmap <leader>w :w!<cr>
 
 " 折叠
 " set foldmethod=indent
+set foldlevelstart=99
 
 "	-> 界面
 """"""""""""""""""""""""""""""""""""""""""""""""""
