@@ -42,5 +42,6 @@ export HISTIGNORE="pwd:ls:ls –ltr:"
 
 bind "set completion-ignore-case on"
 
+HISTTIMEFORMAT="%d/%m/%y %T "
 
 
