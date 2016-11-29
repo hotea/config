@@ -202,7 +202,7 @@ try
     set stal=2
 catch
     endtry
-
+:bufdo tab split
 " 关闭时记住缓冲区信息
 set viminfo^=%
 
@@ -395,6 +395,7 @@ let g:NERDTreeIndicatorMapCustom = {
     \ "Clean"     : "✔︎",
     \ "Unknown"   : "?"
     \ }
+let NERDTreeMapOpenInTab='\r'
 
 "ctrlp
 let g:ctrlp_map = '<c-p>'
