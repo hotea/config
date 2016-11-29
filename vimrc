@@ -166,7 +166,7 @@ map j gj
 map k gk
 
 " 将<Space>映射到/,Ctrl-<Space>映射到?
-map <space> /
+map <space> :
 map <c-space> ?
 
 " 当<leader><ct>按下时禁用高亮
@@ -202,7 +202,7 @@ try
     set stal=2
 catch
     endtry
-
+map <leader>t :bn<cr>
 " 关闭时记住缓冲区信息
 set viminfo^=%
 
