@@ -1,4 +1,4 @@
-""
+
 " hotea's vimrc
 " myblog: http://my.oschina.net/sukai
 "
@@ -29,6 +29,8 @@ set history=500
 
 " 当文件改变时自动读取
 set autoread
+set autowrite
+set autowriteall
 
 " 
 let mapleader=","
@@ -39,7 +41,7 @@ nmap <leader>w :w!<cr>
 
 " 折叠
 " set foldmethod=indent
-set foldlevelstart=99
+set foldlevelstart=1
 
 "	-> 界面
 """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -169,7 +171,7 @@ map k gk
 map <space> :
 map <c-space> ?
 
-" 当<leader><ct>按下时禁用高亮
+" 当<leader><cr>按下时禁用高亮
 map <silent> <leader><cr> :noh<cr>
 
 " 窗口间移动
@@ -191,7 +193,7 @@ map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove<cr>
 
 " 使用当前缓冲区的路径打开新标签
-map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+map <leader>e :tabedit <c-r>=expand("%:p:h")<cr>/
 
 " 将CWD设置为打开缓冲区的目录
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
@@ -202,7 +204,9 @@ try
     set stal=2
 catch
     endtry
-map <leader>t :bn<cr>
+"map <leader>b :bn<cr>
+nnoremap <S-Left> :bprevious<CR>
+nnoremap <S-Right> :bnext<CR>
 " 关闭时记住缓冲区信息
 set viminfo^=%
 
@@ -331,6 +335,7 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'nvie/vim-flake8'
 Plugin 'tmhedberg/SimpylFold'
+Plugin 'terryma/vim-multiple-cursors'
 call vundle#end()
 filetype plugin on
 filetype indent on
@@ -381,7 +386,18 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 "nerdtree
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-map <C-n> :NERDTreeToggle<CR>
+nnoremap <leader>d :NERDTreeToggle<CR>
+nnoremap <F2> :NERDTreeToggle<CR>
+nnoremap <leader>f :NERDTreeFind<CR>
+let g:NERDTreeDirArrowExpandable = '▶'
+let g:NERDTreeDirArrowCollapsible = '▼'
+let NERDTreeIgnore=['\~$', '\.pyc$', '^\.DS_Store$', '^node_modules$', '.git', '__pycache__']
+" 但nerdtree是仅有的窗口时，关闭vim
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+" Show hidden files by default
+let NERDTreeShowHidden=1
+"map <C-n> :NERDTreeToggle<CR>
 
 "nerdtree-git-plugin
 let g:NERDTreeIndicatorMapCustom = {
